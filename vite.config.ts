@@ -21,6 +21,15 @@ export default defineConfig(({ isSsrBuild }) => ({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  /*
+   * Hosts the dev server and `vite preview` accept. Vite refuses unknown Host
+   * headers by default (a DNS-rebinding safeguard), which also blocks hosted
+   * preview environments — the `.e2b.app` entry below is the sandbox this
+   * project was built in. Add your own host here if a preview proxy refuses to
+   * load; a normal deploy on a real host does not need any of this.
+   */
+  server: { host: "0.0.0.0", allowedHosts: [".e2b.app", "localhost", "127.0.0.1"] },
+  preview: { host: "0.0.0.0", allowedHosts: [".e2b.app", "localhost", "127.0.0.1"] },
   build: {
     target: "es2022",
     cssMinify: "lightningcss",

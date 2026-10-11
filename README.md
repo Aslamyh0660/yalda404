@@ -11,7 +11,7 @@ approved location**.
 
 | | |
 | --- | --- |
-| Live site | https://aslamyh0660.github.io/sharesa-verify/ |
+| Live site | **not published yet** — the deployment target is <https://aslamyh0660.github.io/sharesa-verify/>; see [Build, deploy, redeploy](#build-deploy-redeploy) |
 | Telegram bot | [@Sharea_qombot](https://t.me/Sharea_qombot) — the handle has a **q**, never a g |
 | WhatsApp group | **not configured yet** — see [Change the links](#change-the-links) |
 | Like backend | Cloudflare Worker + D1, see [Configure the like backend](#configure-the-like-backend) |

@@ -31,3 +31,4 @@ workers/likes/.wrangler/
 
 # TypeScript
 *.tsbuildinfo
+*.zip

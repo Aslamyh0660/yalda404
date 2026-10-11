@@ -13,6 +13,17 @@ const BASE = (process.argv[2] ?? process.env.LIKES_API_BASE ?? "http://127.0.0.1
 const ORIGIN = process.env.TEST_ORIGIN ?? "https://aslamyh0660.github.io"
 const uuid = () => crypto.randomUUID()
 
+/*
+ * Each run pretends to come from its own IP, so the per-IP rate limit left
+ * behind by a previous run cannot make the suite fail for the wrong reason.
+ *
+ * This is safe: in production Cloudflare sets (and overwrites) CF-Connecting-IP
+ * itself, so a client cannot choose its own rate-limit bucket on the real
+ * Worker. The header is only trusted here, against a local dev server.
+ */
+const RUN_IP = `test-${crypto.randomUUID().slice(0, 8)}`
+const IP_LIMIT_IP = `test-limit-${crypto.randomUUID().slice(0, 8)}`
+
 let passed = 0
 let failed = 0
 
@@ -32,14 +43,19 @@ async function get(path, init) {
   return { status: response.status, body, headers: response.headers }
 }
 
-const post = (id) =>
+const postAs = (ip, id) =>
   get("/like", {
     method: "POST",
-    headers: { "content-type": "application/json", origin: ORIGIN },
+    headers: {
+      "content-type": "application/json",
+      origin: ORIGIN,
+      "CF-Connecting-IP": ip,
+    },
     body: JSON.stringify({ id }),
   })
+const post = (id) => postAs(RUN_IP, id)
 
-console.log(`testing ${BASE}\n`)
+console.log(`testing ${BASE}  (this run uses the pretend IP ${RUN_IP})\n`)
 
 /* 1. the count endpoint answers with a number */
 const start = await get("/count")
@@ -87,7 +103,7 @@ let limited = false
 let attempts = 0
 for (let i = 0; i < limit + 5; i++) {
   attempts++
-  const response = await post(uuid())
+  const response = await postAs(IP_LIMIT_IP, uuid())
   if (response.status === 429) {
     limited = true
     break
