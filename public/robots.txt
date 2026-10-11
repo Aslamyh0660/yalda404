@@ -1,0 +1,6 @@
+# Sharea — شارع
+# One page for every approved location; nothing per-venue is indexed.
+User-agent: *
+Allow: /
+
+Sitemap: https://aslamyh0660.github.io/sharesa-verify/sitemap.xml

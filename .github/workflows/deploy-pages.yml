@@ -1,0 +1,73 @@
+# Builds the page and publishes it to GitHub Pages on every push to main.
+#
+# One-time setup: Settings → Pages → Source → GitHub Actions.
+#
+# The base path is derived from the repository name, because a GitHub Pages
+# project site is served from /<repository>/ — that is also the URL the printed
+# QR code has to encode (see README → "One universal QR code").
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one deploy at a time; a queued run does not cancel the one in flight
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check the bundled icons are current
+        run: npm run check:icons
+
+      - name: Typecheck
+        run: npm run typecheck && npm run typecheck:worker
+
+      - name: Build
+        env:
+          # /<repository>/ for a project site; set to / for a custom domain or a
+          # user/organisation site
+          BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_LIKES_API_BASE: ${{ vars.VITE_LIKES_API_BASE }}
+        run: npm run build
+
+      - name: Audit the built page
+        run: npm run check:markup
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

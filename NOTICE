@@ -1,0 +1,37 @@
+Sharea verification page
+========================
+
+This project's own source code is MIT licensed (see LICENSE).
+
+Third-party material it uses or vendors:
+
+shadcn M3E  ·  MIT  ·  © Crysta1221
+  https://github.com/Crysta1221/shadcn-m3e
+  The components under src/components/m3e and the library code under
+  src/lib/m3e are copied from that project (the @m3e shadcn registry) and are
+  used and modified under the MIT licence. Two modifications are documented in
+  the files themselves and in README → "Design system notes":
+    - lib/m3e/color.ts defers dynamic colour generation to an import()
+    - components/m3e/app-bar.tsx takes a `titleAs` prop
+
+Material Symbols Rounded  ·  Apache-2.0  ·  © Google
+  https://fonts.google.com/icons
+  Icon glyphs are bundled at build time from @iconify-json/material-symbols
+  (Iconify, MIT) instead of loading an icon font.
+
+material-color-utilities  ·  Apache-2.0  ·  © Google
+  https://github.com/material-foundation/material-color-utilities
+  Used to generate the Material 3 colour scheme (scripts/color-report.ts).
+
+IBM Plex Sans Arabic  ·  SIL Open Font License 1.1  ·  © IBM
+Noto Kufi Arabic      ·  SIL Open Font License 1.1  ·  © The Noto Project Authors
+Cormorant Garamond    ·  SIL Open Font License 1.1  ·  © Catharsis Fonts
+  Self-hosted from @fontsource packages; the licences travel with them in
+  node_modules and are reproduced by the packages at build time.
+
+React, Vite, Tailwind CSS, Base UI, class-variance-authority, Iconify, qrcode,
+jsQR, resvg  ·  MIT / Apache-2.0 as noted in their packages.
+
+The Sharea bot portrait is supplied by the Sharea project owner. The file
+committed at public/brand/profile.png is a placeholder until that portrait is
+put in its place (see README → "Replace the portrait").

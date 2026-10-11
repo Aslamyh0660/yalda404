@@ -1,176 +1,105 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>یلدا مبارک | پرستاری ۴۰۴</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;700&display=swap');
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle, #1a0505 0%, #000000 100%);
-            color: #f1c40f;
-            font-family: 'Vazirmatn', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px 20px;
-            border-radius: 25px;
-            border: 1px solid rgba(211, 47, 47, 0.3);
-            max-width: 450px;
-            width: 85%;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        h1 {
-            font-family: 'Lalezar', cursive;
-            font-size: 3rem;
-            color: #e74c3c;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #bdc3c7;
-            margin-bottom: 25px;
-        }
-
-        .pomegranate {
-            font-size: 60px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(231, 76, 60, 0.5));
-        }
-
-        .main-text {
-            color: #ecf0f1;
-            line-height: 1.8;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        .btn {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            padding: 14px 25px;
-            font-size: 1rem;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Vazirmatn';
-            font-weight: bold;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
-        }
-
-        .btn:hover {
-            background-color: #b71c1c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
-        }
-
-        .hafez-box {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 25px;
-            display: none;
-            color: #fff;
-            border-right: 4px solid #f1c40f;
-            font-size: 1rem;
-            line-height: 2;
-            text-align: center;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .signature {
-            margin-top: 45px;
-            font-size: 1.4rem;
-            color: #e74c3c;
-            font-family: 'serif';
-            font-weight: bold;
-        }
-
-        .nursing-tag {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            margin-top: 5px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="pomegranate">🍎</div>
-        <h1>یلدا مبارک</h1>
-        <p class="subtitle">بچه‌های پرستاری ۴۰۴</p>
-        
-        <p class="main-text">
-            امیدوارم اولین یلدای دوران دانشجویی‌مون حسابی خوش بگذره.<br>
-            امشب رو بی‌خیال آناتومی و درس بشیم و فقط شاد باشیم.
-        </p>
-
-        <button class="btn" onclick="getHafez()">نیت کنید و فال بگیرید</button>
-        
-        <div id="hafez-result" class="hafez-box"></div>
-
-        <div class="signature">
-            𝓗𝓸𝓼𝓼𝓮𝓲𝓷 𝓐𝓼𝓵𝓪𝓶𝔂
-        </div>
-        <div class="nursing-tag">Nursing Class of 404</div>
-    </div>
-
+    <!-- first paint: the dark scheme is set before any script or stylesheet
+         runs, so there is no flash of a light page. `color-mode` is the
+         storageKey of ColorModeProvider (see src/main.tsx). -->
     <script>
-        const verses = [
-            "خلوت‌گزیده را به تماشا چه حاجت است؟<br>چون کوی دوست هست به صحرا چه حاجت است؟",
-            "ای پادشه خوبان داد از غم تنهایی<br>دل بی تو به جان آمد وقت است که بازآیی",
-            "در عزل پرتو حسنت ز تجلی دم زد<br>عشق پیدا شد و آتش به همه عالم زد",
-            "بیا تا گل برافشانیم و می در ساغر اندازیم<br>فلک را سقف بشکافیم و طرحی نو دراندازیم",
-            "روز هجران و شب فرقت یار آخر شد<br>زدم این فال و گذشت اختر و کار آخر شد",
-            "مژده ای دل که مسیحا نفسی می‌آید<br>که ز انفاس خوشش بوی کسی می‌آید",
-            "یوسف گمگشته بازآید به کنعان غم مخور<br>کلبه احزان شود روزی گلستان غم مخور",
-            "سحر با باد می‌گفتم حدیث آرزومندی<br>خطاب آمد که واثق شو به الطاف خداوندی",
-            "الا یا ایها الساقی ادر کأسا و ناولها<br>که عشق آسان نمود اول ولی افتاد مشکل‌ها",
-            "دوش وقت سحر از غصه نجاتم دادند<br>واندر آن ظلمت شب آب حیاتم دادند",
-            "شراب و عیش نهان چیست کار بی‌بنیاد<br>زدیم بر صف رندان و هر چه بادا باد",
-            "گلعذاری ز گلستان جهان ما را بس<br>زین چمن سایه آن سرو روان ما را بس",
-            "عیب رندان مکن ای زاهد پاکیزه سرشت<br>که گناه دگران بر تو نخواهند نوشت",
-            "درخت دوستی بنشان که کام دل به بار آرد<br>نهال دشمنی برکن که رنج بی‌شمار آرد",
-            "نفس باد صبا مشک فشان خواهد شد<br>عالم پیر دگرباره جوان خواهد شد",
-            "حسب حالی ننوشتی و شد ایامی چند<br>محرمی کو که فرستم به تو پیغامی چند",
-            "ما ز یاران چشم یاری داشتیم<br>خود غلط بود آنچه ما پنداشتیم",
-            "رسید مژده که ایام غم نخواهد ماند<br>چنان نماند و چنین نیز هم نخواهد ماند",
-            "دلا تا کی در این زندان فریب این و آن بینی<br>یکی زین چاه ظلمانی برون شو تا جهان بینی",
-            "گل در بر و می در کف و معشوق به کام است<br>سلطان جهانم به چنین روز غلام است",
-            "صبا به لطف بگو آن غزال رعنا را<br>که سر به کوه و بیابان تو داده‌ای ما را"
-        ];
-
-        function getHafez() {
-            const box = document.getElementById('hafez-result');
-            const randomVerse = verses[Math.floor(Math.random() * verses.length)];
-            
-            box.style.display = 'block';
-            box.innerHTML = `<span style="color:#f1c40f; font-weight:bold;">حضرت حافظ می‌فرماید:</span><br>${randomVerse}`;
-            
-            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+      try {
+        localStorage.setItem("color-mode", "dark")
+      } catch (e) {}
+      document.documentElement.classList.add("dark")
     </script>
-</body>
+    <style>
+      html {
+        background-color: #0a1c33;
+        color-scheme: dark;
+      }
+    </style>
+
+    <title>شارع | هذا المكان معتمد</title>
+    <meta
+      name="description"
+      content="المكان الذي وجدت فيه رمز شارع الرسمي من الأماكن المعتمدة لدى شارع. خدمات الطلاب والهدايا والسيارات والصرافة والسياحة العلاجية والخدمات داخل قم والدعم المباشر، من بوت شارع على تيليجرام."
+    />
+    <meta name="theme-color" content="#0a1c33" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://aslamyh0660.github.io/sharesa-verify/" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%BASE_URL%icons/apple-touch-icon.png" />
+    <link rel="manifest" href="%BASE_URL%site.webmanifest" />
+
+    <!-- the two fonts the first screen needs, nothing else -->
+    <link
+      rel="preload"
+      href="%BASE_URL%fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="%BASE_URL%fonts/noto-kufi-arabic-arabic-600-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- social preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar" />
+    <meta property="og:site_name" content="شارع" />
+    <meta property="og:title" content="شارع | هذا المكان معتمد" />
+    <meta
+      property="og:description"
+      content="المكان الذي وجدت فيه رمز شارع الرسمي من الأماكن المعتمدة لدى شارع. خدمات متكاملة للزوار العرب في قم."
+    />
+    <meta property="og:url" content="https://aslamyh0660.github.io/sharesa-verify/" />
+    <meta property="og:image" content="%BASE_URL%og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="بطاقة شارع: هذا المكان معتمد من بوت شارع."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="شارع | هذا المكان معتمد" />
+    <meta
+      name="twitter:description"
+      content="المكان الذي وجدت فيه رمز شارع الرسمي من الأماكن المعتمدة لدى شارع."
+    />
+    <meta name="twitter:image" content="%BASE_URL%og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "شارع",
+        "alternateName": "Sharea",
+        "url": "https://aslamyh0660.github.io/sharesa-verify/",
+        "areaServed": "قم، إيران",
+        "description": "بوت تيليجرام لخدمات الزوار العرب في قم: خدمات الطلاب، الهدايا والتذكارات، خدمات السيارات، الصرافة، السياحة العلاجية، الخدمات داخل المدينة، والدعم المباشر.",
+        "sameAs": ["https://t.me/Sharea_qombot"]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width: 34rem; margin: 3rem auto; padding: 1.5rem; font-family: system-ui, sans-serif; color: #f5eedc">
+        <h1 style="font-size: 1.5rem">هذا المكان معتمد من بوت شارع</h1>
+        <p>
+          وجود رمز شارع الرسمي في هذا المكان يعني أنه من الأماكن المعتمدة لدينا.
+          لاستخدام الصفحة يلزم تفعيل JavaScript، ويمكنك الوصول إلى البوت مباشرة:
+        </p>
+        <p><a href="https://t.me/Sharea_qombot" style="color: #f8d786">https://t.me/Sharea_qombot</a></p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

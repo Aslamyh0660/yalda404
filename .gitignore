@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.ssr-check/
+.scratch/
+scratch/
+
+# logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# environment
+.env
+.env.local
+.env.*.local
+
+# editors and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Cloudflare / wrangler
+.wrangler/
+workers/likes/.wrangler/
+.dev.vars
+
+# TypeScript
+*.tsbuildinfo

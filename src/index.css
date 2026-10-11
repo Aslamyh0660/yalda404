@@ -1,0 +1,182 @@
+/*
+ * Sharea — stylesheet order matters:
+ *   1. Tailwind v4
+ *   2. tw-animate-css + shadcn's base layer (what shadcn M3E expects)
+ *   3. the M3E token layer: color roles, M3 type scale, shape, elevation, motion
+ *   4. the self-hosted fonts
+ *   5. this page's own tokens and utilities (marquee, reveal, safe areas)
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./lib/m3e/m3e.css";
+@import "./styles/fonts.css";
+
+/*
+ * Fonts. M3E ships Roboto Flex for Latin UI text; this page is Arabic, so the
+ * sans stack starts with IBM Plex Sans Arabic and keeps Roboto Flex's own
+ * fallbacks behind it. Noto Kufi Arabic carries headings, Cormorant Garamond
+ * only the Latin wordmark.
+ */
+@theme {
+  --font-sans:
+    "IBM Plex Sans Arabic", "Noto Kufi Arabic", system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-heading:
+    "Noto Kufi Arabic", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-wordmark: "Cormorant Garamond", "Times New Roman", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* ---------- base ---------- */
+
+html {
+  /* no white flash before the stylesheet lands */
+  background-color: #0a1c33;
+  color-scheme: dark;
+  /* the sticky bottom bar and the top app bar must never cover a target */
+  scroll-padding-top: 4.5rem;
+  scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-sans);
+  /* room for the mobile sticky bar, including the iPhone home indicator */
+  padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+/* Arabic reads better with a slightly taller line and no synthetic italics */
+p,
+li {
+  line-height: 1.75;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Latin fragments inside RTL text (the handle, the wordmark, URLs) */
+.latin {
+  font-feature-settings: "kern" 1;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background-color: var(--md-sys-color-tertiary);
+  color: var(--md-sys-color-on-tertiary);
+}
+
+/* ---------- services ribbon (the only looping motion on the page) ---------- */
+
+.ribbon {
+  --ribbon-duration: 52s;
+  overflow: hidden;
+  /* soft edges, no mask-image: a plain gradient on brand surface */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 6rem,
+    black calc(100% - 6rem),
+    transparent 100%
+  );
+}
+
+.ribbon-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 2.5rem;
+  /* RTL: the duplicate sits to the left, so the row drifts to the right */
+  animation: sharea-ribbon var(--ribbon-duration) linear infinite;
+  will-change: transform;
+}
+
+@keyframes sharea-ribbon {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* exactly one copy of the list: the loop is seamless */
+    transform: translateX(50%);
+  }
+}
+
+/* pause while the visitor reads it */
+.ribbon:hover .ribbon-track,
+.ribbon:focus-within .ribbon-track,
+.ribbon:active .ribbon-track {
+  animation-play-state: paused;
+}
+
+/* ---------- section reveal, one effect only ---------- */
+
+/*
+ * Nothing is hidden by default: an element only animates once JavaScript has
+ * decided it is below the fold, so content is never waiting for an animation —
+ * and never invisible if the script fails.
+ */
+.reveal-in {
+  animation: sharea-reveal 0.5s var(--md-sys-motion-easing-emphasized-decelerate)
+    both;
+}
+
+@keyframes sharea-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- reduced motion: everything still, nothing hidden ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-track {
+    animation: none;
+    transform: none;
+  }
+
+  .reveal-in {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- wordmark ---------- */
+
+.wordmark {
+  font-family: var(--font-wordmark);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  /* the optical size of a small caps-ish serif at display sizes */
+  font-size: 1.0625rem;
+  line-height: 1;
+  text-transform: uppercase;
+}

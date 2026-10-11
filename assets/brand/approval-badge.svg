@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="104" viewBox="0 0 560 104">
+  <title>معتمد — SHAREA</title>
+  <rect x="3" y="3" width="554" height="98" rx="49"
+        fill="#0e2037" stroke="#f8d786" stroke-width="3"/>
+  <g transform="translate(498 32) scale(1.6666666666666667)" fill="#f8d786">
+    <path d="M10.95 12.7L9.5 11.275Q9.225 11 8.813 11t-.713.3q-.275.275-.275.7t.275.7l2.15 2.15q.3.3.7.3t.7-.3l4.25-4.25q.3-.3.287-.7t-.287-.7q-.3-.3-.712-.312t-.713.287zm-2.8 9.05L6.7 19.3l-2.75-.6q-.375-.075-.6-.387t-.175-.688L3.45 14.8l-1.875-2.15q-.25-.275-.25-.65t.25-.65L3.45 9.2l-.275-2.825q-.05-.375.175-.688t.6-.387l2.75-.6l1.45-2.45q.2-.325.55-.438t.7.038l2.6 1.1l2.6-1.1q.35-.15.7-.038t.55.438L17.3 4.7l2.75.6q.375.075.6.388t.175.687L20.55 9.2l1.875 2.15q.25.275.25.65t-.25.65L20.55 14.8l.275 2.825q.05.375-.175.688t-.6.387l-2.75.6l-1.45 2.45q-.2.325-.55.438t-.7-.038l-2.6-1.1l-2.6 1.1q-.35.15-.7.038t-.55-.438" fill="currentColor"/>
+  </g>
+  <text x="482" y="66" text-anchor="end"
+        font-family="Noto Kufi Arabic" font-size="38" font-weight="500"
+        fill="#f8d786">معتمد</text>
+  <rect x="330" y="30" width="2" height="44" fill="#3d4758"/>
+  <text x="300" y="68" text-anchor="end" direction="ltr"
+        font-family="Cormorant Garamond" font-size="34" font-weight="600"
+        letter-spacing="8" fill="#F5EEDC">SHAREA</text>
+</svg>

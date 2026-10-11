@@ -1,0 +1,24 @@
+# Sharea like counter — Cloudflare Worker + D1
+#
+#   npm run likes:migrate -- --remote     create/patch the remote database
+#   npm run likes:deploy                  publish the Worker
+#
+# Then put the Worker URL in .env.local (and in the deploy environment):
+#   VITE_LIKES_API_BASE=https://sharea-likes.<your-subdomain>.workers.dev
+#
+# Nothing secret lives in this file: the D1 binding is resolved by Cloudflare.
+name = "sharea-likes"
+main = "src/index.ts"
+compatibility_date = "2025-01-15"
+
+# Keep the count readable by the page and nothing else. The page origin must be
+# listed so the browser is allowed to call it.
+[vars]
+ALLOWED_ORIGINS = "https://aslamyh0660.github.io,http://localhost:5173,http://127.0.0.1:5173"
+MAX_PER_IP_PER_HOUR = "20"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sharea_likes"
+# fill in after `wrangler d1 create sharea_likes`
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
